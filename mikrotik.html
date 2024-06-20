@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta 
+	name="thema-color"
+	content="#006EDF"
+	/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuração de Bloqueio de IP no Mikrotik</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        h2 {
+            color: #16a085;
+        }
+        pre {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            padding: 10px;
+            overflow: auto;
+            position: relative;
+        }
+        code {
+            color: #e74c3c;
+        }
+        .copy-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            background-color: #16a085;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Configuração de Bloqueio de IP após Tentativas de Login Falhadas no Mikrotik</h1>
+
+    <p>Este guia descreve como configurar o Mikrotik para bloquear automaticamente endereços IP após várias tentativas de login falhadas.</p>
+
+    <h2>1. Criação da Lista de Endereços para Bloqueio Temporário</h2>
+    <pre><code id="code1">/ip firewall address-list add list=blocked-ips timeout=1h comment="IPs bloqueados temporariamente"</code><button class="copy-button" onclick="copyToClipboard('code1')">Copiar</button></pre>
+
+    <h2>2. Adicionar Regra de Firewall para Bloquear IPs na Lista</h2>
+    <pre><code id="code2">/ip firewall filter add chain=input src-address-list=blocked-ips action=drop comment="Bloquear IPs na lista de bloqueados"</code><button class="copy-button" onclick="copyToClipboard('code2')">Copiar</button></pre>
+
+    <h2>3. Ativar Logging para Tentativas de Login com Senha Incorreta</h2>
+    <pre><code id="code3">/system logging add topics=system,error action=memory</code><button class="copy-button" onclick="copyToClipboard('code3')">Copiar</button></pre>
+
+    <h2>4. Criar o Script para Monitorar Tentativas de Login Falhadas</h2>
+    <pre><code id="code4">/system script add name=block-failed-logins policy=read,write source="
+:local failCount 0;
+:local srcIP \"\";
+/log print where message~\"login failure for user\" file=login_fails
+:foreach i in=[/log find message~\"login failure for user\"] do={
+    :set srcIP [:pick [/log get \$i message] 42 56];
+    :if ([/ip firewall address-list find list=failed-login-attempts address=\$srcIP] != \"\") do={
+        :set failCount ([/ip firewall address-list get [find list=failed-login-attempts address=\$srcIP] disabled] + 1);
+        /ip firewall address-list set [find list=failed-login-attempts address=\$srcIP] disabled=\$failCount;
+    } else={
+        /ip firewall address-list add list=failed-login-attempts address=\$srcIP disabled=1 timeout=1h comment=\"Tentativas de login falhadas\";
+    }
+    :if (\$failCount >= 3) do={
+        /ip firewall address-list add list=blocked-ips address=\$srcIP timeout=1h comment=\"Bloqueado por falhas de login\";
+        :log warning \"IP \$srcIP bloqueado por \$failCount tentativas de login falhadas\";
+        /ip firewall address-list remove [find list=failed-login-attempts address=\$srcIP];
+    }
+}
+"</code><button class="copy-button" onclick="copyToClipboard('code4')">Copiar</button></pre>
+
+    <h2>5. Agendar o Script para Executar Regularmente</h2>
+    <pre><code id="code5">/system scheduler add name=checkFailedLogins interval=5m on-event=block-failed-logins</code><button class="copy-button" onclick="copyToClipboard('code5')">Copiar</button></pre>
+
+    <h2>6. Opcional: Configurar Limpeza de Logs</h2>
+    <pre><code id="code6">/system scheduler add name=cleanLogs interval=1d on-event="/log print file=cleaned-logs; /log clear"</code><button class="copy-button" onclick="copyToClipboard('code6')">Copiar</button></pre>
+
+    <script>
+        function copyToClipboard(id) {
+            var codeElement = document.getElementById(id);
+            var textArea = document.createElement('textarea');
+            textArea.value = codeElement.textContent;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            alert('Código copiado para a área de transferência!');
+        }
+    </script>
+</body>
+</html>
