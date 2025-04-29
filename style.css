@@ -1,0 +1,226 @@
+/* Estilos Gerais */
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f4; /* Cinza claro de fundo */
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+    padding: 20px 0;
+}
+
+h1, h2, h3, h4 {
+    color: #005f73; /* Tom de azul/verde escuro para títulos */
+}
+
+p {
+    margin-bottom: 1em;
+}
+
+ul {
+    list-style: disc;
+    margin-left: 20px;
+}
+
+a {
+    color: #0a9396; /* Tom de azul/verde médio para links */
+    text-decoration: none;
+}
+
+a:hover {
+    color: #005f73;
+}
+
+/* Header */
+header {
+    background: #003f5c; /* Azul escuro para o header */
+    color: #fff;
+    padding-top: 30px;
+    min-height: 150px;
+    text-align: center;
+    border-bottom: #0a9396 3px solid;
+}
+
+.header-content {
+    display: flex;
+    flex-direction: column; /* Empilha verticalmente em telas menores */
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-pic {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    margin-bottom: 15px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5em;
+    color: #fff;
+}
+
+header h2 {
+    margin: 5px 0 0 0;
+    font-size: 1.2em;
+    font-weight: normal;
+    color: #e0fbfc; /* Azul claro para subtítulo */
+}
+
+/* Seções */
+section {
+    padding: 30px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+section:nth-child(even) {
+    background-color: #fff; /* Alterna cor de fundo */
+}
+
+section h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+/* Conquistas e Experiência */
+#conquistas h4 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #005f73;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+}
+
+.skills-icons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; /* Espaçamento entre ícones */
+    margin-top: 15px;
+    justify-content: center; /* Centraliza os ícones */
+}
+
+.skills-icons span {
+    display: inline-flex; /* Para alinhar ícone e texto */
+    align-items: center;
+    background-color: #e0fbfc; /* Fundo azul claro para skills */
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    color: #003f5c; /* Texto azul escuro */
+}
+
+.skills-icons i {
+    margin-right: 8px;
+    color: #0a9396; /* Cor do ícone */
+}
+
+/* Footer */
+footer {
+    background: #003f5c; /* Mesmo azul do header */
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 30px;
+}
+
+footer p {
+    margin-bottom: 10px;
+}
+
+.whatsapp-button {
+    display: inline-block;
+    background-color: #25D366; /* Cor do WhatsApp */
+    color: #fff;
+    padding: 12px 25px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 10px 0 20px 0;
+    transition: background-color 0.3s ease;
+}
+
+.whatsapp-button:hover {
+    background-color: #1DAE50;
+    color: #fff;
+}
+
+.whatsapp-button i {
+    margin-right: 8px;
+}
+
+.social-links a {
+    color: #e0fbfc; /* Cor clara para ícones sociais */
+    font-size: 1.8em;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+    color: #fff;
+}
+
+/* Responsividade */
+@media(max-width: 768px) {
+    .container {
+        width: 90%;
+    }
+
+    header h1 {
+        font-size: 2em;
+    }
+
+    header h2 {
+        font-size: 1em;
+    }
+
+    section h3 {
+        font-size: 1.8em;
+    }
+
+    .profile-pic {
+        width: 100px;
+        height: 100px;
+    }
+
+    .skills-icons {
+        justify-content: flex-start; /* Alinha à esquerda em telas menores */
+    }
+}
+
+@media(max-width: 500px) {
+    header {
+        min-height: 120px;
+    }
+
+    header h1 {
+        font-size: 1.8em;
+    }
+
+    header h2 {
+        font-size: 0.9em;
+    }
+
+    .profile-pic {
+        width: 80px;
+        height: 80px;
+    }
+
+    .whatsapp-button {
+        padding: 10px 20px;
+        font-size: 0.9em;
+    }
+
+    .social-links a {
+        font-size: 1.5em;
+    }
+}
+
