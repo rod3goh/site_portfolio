@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4042483239030912"
+     crossorigin="anonymous"></script>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>IPv6 Test</title>
+
+    <style>
+
+        body {
+
+            font-family: Arial, sans-serif;
+
+            text-align: center;
+
+            margin: 0;
+
+            padding: 0;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            height: 100vh;
+
+            background-color: #f4f4f4;
+
+        }
+
+        h1 {
+
+            color: #333;
+
+        }
+
+        #result {
+
+            margin-top: 20px;
+
+            font-size: 1.2em;
+
+            padding: 10px;
+
+            border-radius: 5px;
+
+        }
+
+        .success {
+
+            color: green;
+
+        }
+
+        .error {
+
+            color: red;
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <h1>IPv6 Connectivity Test</h1>
+
+    <p>Click the button below to test if your connection supports IPv6.</p>
+
+    <button onclick="testIPv6()">Test IPv6</button>
+
+    <div id="result"></div>
+
+
+    <script>
+
+        function testIPv6() {
+
+            const ipv6TestUrl = "https://[2606:4700:4700::1111]/"; // Cloudflare IPv6 address
+
+            const resultDiv = document.getElementById('result');
+
+            resultDiv.textContent = "Testing IPv6 connectivity...";
+
+
+            fetch(ipv6TestUrl, { method: 'HEAD', mode: 'no-cors' })
+
+                .then(() => {
+
+                    resultDiv.textContent = "Your connection supports IPv6!";
+
+                    resultDiv.className = "success";
+
+                })
+
+                .catch(() => {
+
+                    resultDiv.textContent = "IPv6 is not supported or unreachable.";
+
+                    resultDiv.className = "error";
+
+                });
+
+        }
+
+    </script>
+
+</body>
+
+</html>
+
