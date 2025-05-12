@@ -1,4 +1,0 @@
-{
-  "code": "internal",
-  "message": "api call failed, status code: 429, body: {\"message\":\"You have exceeded the MONTHLY quota for Requests on your current plan, MEGA. Upgrade your plan at https:\\/\\/rapidapi.com\\/rockapis-rockapis-default\\/api\\/linkedin-data-api\"}"
-}
