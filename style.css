@@ -44,8 +44,7 @@ a:hover {
 header {
   background: #003f5c; /* Azul escuro para o header */
   color: #fff;
-  padding-top: 30px;
-  min-height: 150px;
+
   text-align: center;
   border-bottom: #0a9396 3px solid;
 }
